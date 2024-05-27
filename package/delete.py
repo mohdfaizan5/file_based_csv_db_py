@@ -1,61 +1,44 @@
-# def delete():
-
-#   deleting_id = [3]
-
-#   ids = [
-#     {
-#     "id": 1,
-#     "name": "s"
-#   },
-#     {
-#     "id": 2,
-#     "name": "s"
-#   },
-#     {
-#     "id": 3,
-#     "name": "s"
-#   },
-#     {
-#     "id": 5,
-#     "name": "s"
-#   },
-#         ]
-
-#   for row in ids:
-#     if row['id'] not in deleting_id:
-#       print(row)
-    
-
-
 import csv
 
 final_data = []
 
 def delete(target_file):
-  """"""
-  with open(target_file, "r+") as target, open("./inputs/delete.csv", "r") as input_file:
-    reader = csv.DictReader(target)
-    input_reader = csv.reader(input_file)
-    # writer = csv.DictWriter(target) # field names are required
+
+  with open(target_file, "r") as target_read, open("./inputs/delete.csv", "r") as input_file, open(target_file, "r+") as temp_read:
     
+    reader = csv.DictReader(target_read)
+    reader_temp = csv.DictReader(temp_read)
+    input_reader = csv.reader(input_file)
     
     target_header = next(input_reader)[0]
-    print(target_header)
     
     targeted_values = []
     for r in input_reader:
-      targeted_values.append(int(r[0]))
-    print(targeted_values)
+      targeted_values.append(r[0])
     
+    headers = []
+    for row in reader_temp:
+      headers = list(row.keys())
+      break
     
+    # print(headers)
+    final_data.append(headers)
+    
+    # print(final_data)
     for row in reader:
-      # print(type(row["emp_id"]))
-      if(int(row[target_header]) not in targeted_values):
+      
+      if(row[target_header] not in targeted_values):
+        # print(list(row.values()))
+        final_data.append(list(row.values()))
         
-        print(row["emp_id"])
-        print(row)
-        writer.writerow(row)
-        # Here I got final values 
+    # Here I got final values 
+    print(final_data)
     
-    # Now take that values and write to target.csv
-    #
+
+    with open(target_file, "w", newline="") as final_file:
+      
+      writer = csv.writer(final_file) # field names are required
+    
+      for row in final_data:
+        writer.writerow(row)  
+      
