@@ -6,9 +6,8 @@ def update(target_file):
     Read target.csv file
     Now loop over target_file_rows
       if row["id"] == [update_file]
-
   """
-  with open(target_file, "r")as target_csv_file, open("inputs/update.csv", "r") as update_csv_file, open("inputs/update.csv", "r") as update_csv_temp:
+  with open(target_file, "r") as target_csv_file, open("inputs/update.csv", "r") as update_csv_file, open("inputs/update.csv", "r") as update_csv_temp:
     
     target_reader = csv.DictReader(target_csv_file)
     update_reader_temp = csv.reader(update_csv_file)

@@ -18,5 +18,5 @@ def insert(target_file):
   except FileNotFoundError:
     print("File not found")
   finally:
-    print("Inserted sucessfully")
+    print("Inserted successfully")
     

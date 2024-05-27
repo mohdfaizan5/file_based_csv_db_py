@@ -32,7 +32,7 @@ def delete(target_file):
         final_data.append(list(row.values()))
         
     # Here I got final values 
-    print(final_data)
+    # print(final_data)
     
 
     with open(target_file, "w", newline="") as final_file:
@@ -41,4 +41,6 @@ def delete(target_file):
     
       for row in final_data:
         writer.writerow(row)  
+        
+    print("Deleted successfully")
       
