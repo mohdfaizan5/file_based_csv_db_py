@@ -1,42 +1,40 @@
 import csv
 
 def update(target_file):
-  """
-    Read update.csv file
-    Read target.csv file
-    Now loop over target_file_rows
-      if row["id"] == [update_file]
-  """
-  with open(target_file, "r") as target_csv_file, open("inputs/update.csv", "r") as update_csv_file, open("inputs/update.csv", "r") as update_csv_temp:
-    
-    target_reader = csv.DictReader(target_csv_file)
-    update_reader_temp = csv.reader(update_csv_file)
-    update_reader = csv.DictReader(update_csv_file)
-    
-    # target_header = next(update_reader_temp)[0] # id
-    # print(target_header)
-    
-    
-    
-    ids = [row["emp_id"] for row in update_reader]
+  
+  # get data from csv
+  updating_date = get_data_from_csv()
+  whom_to_target= list(updating_date.keys())[0]
+  whom_to_target_value = list(updating_date[whom_to_target])[0]
+  # print(type(whom_to_target), type(whom_to_target_value))
+  
+  what_to_update = list(updating_date.keys())[1]
+  what_to_update_with = updating_date[what_to_update]
+  # print(type(what_to_update), type(what_to_update_with))
+  
+  # return
+  updated_data = []
+  with open(target_file, "r", newline="") as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+      if row[f"{whom_to_target}"] == f"{whom_to_target_value}":
+        row[f"{what_to_update}"] = f"{what_to_update_with}"
+      updated_data.append(row)
 
-    for row in target_reader:
-      # print(row["emp_id"])    
-      if row["emp_id"] in ids:
-        print(row)
-        
-    
+  with open(target_file, "w", newline="") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=reader.fieldnames)
+    writer.writeheader()
+    writer.writerows(updated_data)
 
+def get_data_from_csv():
+  # read file inputs/update.csv
+  # get data from it.
+  with open("./inputs/update.csv", "r", newline="") as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+      # print(row)
+      return row
       
-
-
-    
-  # numbers = [1, 2, 3, 4, 5]
-  # # squares = [number * number for number in numbers]
-  # # print(squares)
-  # # even_numbers = [number for number in numbers if number%2 == 0]
-  # even_numbers = [number for number in numbers]
-  # print(even_numbers)
+        
   
   
-  # return 
